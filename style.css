@@ -1,0 +1,85 @@
+body {
+  background: linear-gradient(135deg, #ffdee9, #b5fffc);
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 30px;
+  color: #333;
+}
+
+#scratchCard {
+  position: relative;
+  display: inline-block;
+  margin-top: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#result {
+  width: 512px;
+  height: 674px;
+  background-image: url("ticket.jpg"); /* תמונת הכרטיס */
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px); /* טשטוש לפני הגירוד */
+  transition: filter 0.5s ease; /* מעבר חלק להסרה */
+}
+
+#result.clear {
+  filter: none; /* בלי טשטוש אחרי גילוי */
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+}
+#wow {
+  position: fixed;
+  top: 15%; /* במקום 50%, שיהיה גבוה יותר */
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 40px;
+  border-radius: 15px;
+  font-size: 1.5rem; /* קצת יותר קטן */
+  color: #ff4081;
+  font-weight: bold;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.5s ease;
+  z-index: 1000;
+}
+
+#wow.show {
+  transform: translate(-50%, -50%) scale(1);
+  animation: bounce 0.6s ease; /* אפקט קפיצה */
+}
+
+/* קונפטי */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  animation: fall 3s linear forwards;
+  z-index: 999;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
