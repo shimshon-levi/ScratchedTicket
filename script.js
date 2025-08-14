@@ -1,16 +1,26 @@
 const canvas = document.getElementById("scratch");
 const ctx = canvas.getContext("2d");
 let isDrawing = false;
-let totalPixels = canvas.width * canvas.height;
 let alreadyShown = false;
 
-// מילוי שכבת הכיסוי
-ctx.fillStyle = "#cccccc";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.font = "28px Arial";
-ctx.fillStyle = "#000";
-ctx.textAlign = "center";
-ctx.fillText("גרדי כאן כדי לגלות!", canvas.width / 2, canvas.height / 2);
+// פונקציה להתאים את הקנבס לגודל התיבה
+function resizeCanvas() {
+  const card = document.getElementById("scratchCard");
+  canvas.width = card.clientWidth;
+  canvas.height = card.clientHeight;
+  totalPixels = canvas.width * canvas.height;
+
+  // מילוי שכבת הכיסוי מחדש
+  ctx.fillStyle = "#cccccc";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = `${canvas.width / 18}px Arial`; // גודל טקסט דינמי
+  ctx.fillStyle = "#000";
+  ctx.textAlign = "center";
+  ctx.fillText("גרדי כאן כדי לגלות!", canvas.width / 2, canvas.height / 2);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas(); // קריאה ראשונית
 
 // גירוד
 function scratch(e) {
@@ -21,7 +31,7 @@ function scratch(e) {
 
   ctx.globalCompositeOperation = "destination-out";
   ctx.beginPath();
-  ctx.arc(x, y, 25, 0, Math.PI * 2);
+  ctx.arc(x, y, canvas.width / 20, 0, Math.PI * 2); // גודל מברשת דינמי
   ctx.fill();
 
   checkReveal();
@@ -36,10 +46,10 @@ function checkReveal() {
     if (imageData[i] === 0) transparentPixels++;
   }
 
-  const percent = (transparentPixels / totalPixels) * 100;
+  const percent = (transparentPixels / (canvas.width * canvas.height)) * 100;
   if (percent > 70 && !alreadyShown) {
     alreadyShown = true;
-    document.getElementById("result").classList.add("clear"); // הסרת הטשטוש
+    document.getElementById("result").classList.add("clear");
     showSurprise();
   }
 }
